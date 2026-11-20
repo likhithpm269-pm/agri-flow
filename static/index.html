@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSmart - Smallholder & First-Time Farmer Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navigation & Host Status Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="brand-icon">🌱</span>
+        <div>
+          <h1 class="brand-title">AgriSmart <span class="tag">Smallholder Hub</span></h1>
+          <p class="brand-subtitle" data-i18n="header_subtitle">Unifying advice, breaking language barriers & cutting input costs</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Host Availability Live Indicator -->
+        <div id="host-status" class="host-badge connecting">
+          <span class="status-dot"></span>
+          <span id="host-status-text">Checking Host...</span>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="lang-picker-wrapper">
+          <span class="globe-icon">🌐</span>
+          <select id="lang-select" aria-label="Select Language">
+            <option value="en">English (US/UK)</option>
+            <option value="hi">हिंदी (Hindi)</option>
+            <option value="es">Español (Spanish)</option>
+            <option value="sw">Kiswahili (Swahili)</option>
+            <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="bn">বাংলা (Bengali)</option>
+          </select>
+        </div>
+
+        <!-- Audio Narration Master Toggle -->
+        <button id="master-speech-btn" class="icon-btn" title="Audio Voice Assistant">
+          <span id="speech-icon">🔊</span>
+          <span class="btn-label" data-i18n="audio_assist">Voice Assist</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Problem Statement Banner -->
+  <section class="mission-banner">
+    <div class="banner-grid">
+      <div class="mission-pill">
+        <span class="pill-icon">🧭</span>
+        <div>
+          <strong data-i18n="pillar1_title">No More Scattered Advice</strong>
+          <span data-i18n="pillar1_desc">One verified calendar from seed to harvest</span>
+        </div>
+      </div>
+      <div class="mission-pill">
+        <span class="pill-icon">🗣️</span>
+        <div>
+          <strong data-i18n="pillar2_title">Zero Language Barriers</strong>
+          <span data-i18n="pillar2_desc">Instant translation & full audio voice narration</span>
+        </div>
+      </div>
+      <div class="mission-pill">
+        <span class="pill-icon">📉</span>
+        <div>
+          <strong data-i18n="pillar3_title">Cut Input Costs 60-80%</strong>
+          <span data-i18n="pillar3_desc">DIY bio-fertilizers, tool sharing & bulk buying</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Weather Spray Alert Bar -->
+  <div class="container spray-alert-box" id="weather-banner">
+    <div class="weather-content">
+      <span class="weather-icon" id="weather-icon">⛅</span>
+      <div class="weather-details">
+        <strong id="weather-title">Checking Local Spray Conditions...</strong>
+        <p id="weather-desc">Calculating humidity, wind speed, and rain probability to prevent wasting inputs.</p>
+      </div>
+    </div>
+    <div class="weather-badge" id="spray-verdict-badge">Checking</div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <main class="container">
+    <nav class="tab-navigation">
+      <button class="tab-btn active" data-tab="tab-advisory">
+        <span class="tab-icon">🌾</span>
+        <span data-i18n="tab_advisory">Crop Advisory</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-doctor">
+        <span class="tab-icon">🩺</span>
+        <span data-i18n="tab_doctor">Crop Doctor</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-calculator">
+        <span class="tab-icon">🧮</span>
+        <span data-i18n="tab_calc">Cost Calculator</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-recipes">
+        <span class="tab-icon">🧪</span>
+        <span data-i18n="tab_recipes">DIY Bio-Inputs</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-equipment">
+        <span class="tab-icon">🚜</span>
+        <span data-i18n="tab_tools">Tool Sharing</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-bulk">
+        <span class="tab-icon">📦</span>
+        <span data-i18n="tab_bulk">Bulk Buying Pool</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: CROP ADVISORY (Unified Advice) -->
+    <section id="tab-advisory" class="tab-pane active">
+      <div class="section-intro">
+        <div>
+          <h2 data-i18n="advisory_heading">Step-by-Step Crop Lifecycle Guides</h2>
+          <p data-i18n="advisory_sub">Structured guidance for first-time farmers: avoid conflicting tips and know exactly what to do at each stage.</p>
+        </div>
+        <div class="filter-group">
+          <label for="crop-filter-select" data-i18n="filter_category">Category:</label>
+          <select id="crop-filter-select">
+            <option value="">All Categories</option>
+            <option value="Grains">Grains & Cereals</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Tubers">Tubers</option>
+            <option value="Spices / Vegetables">Spices</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="crops-container">
+        <!-- Rendered dynamically -->
+        <div class="loading-spinner">Loading crop advisories...</div>
+      </div>
+    </section>
+
+    <!-- TAB 2: CROP DOCTOR (Symptom & Pest Solver) -->
+    <section id="tab-doctor" class="tab-pane">
+      <div class="section-intro">
+        <div>
+          <h2 data-i18n="doctor_heading">Crop Doctor & Diagnostic Guide</h2>
+          <p data-i18n="doctor_sub">Identify leaf diseases and pests quickly. Prioritizes natural and low-cost remedies over expensive chemicals.</p>
+        </div>
+      </div>
+
+      <div class="doctor-search-box">
+        <div class="input-field">
+          <label for="doc-crop-select" data-i18n="select_crop">Select Crop:</label>
+          <select id="doc-crop-select">
+            <option value="All">All Crops</option>
+            <option value="Tomato">Tomato</option>
+            <option value="Wheat">Wheat</option>
+            <option value="Paddy">Paddy / Rice</option>
+            <option value="Potato">Potato</option>
+            <option value="Maize">Maize / Corn</option>
+            <option value="Chili">Chili / Pepper</option>
+          </select>
+        </div>
+        <div class="input-field grow">
+          <label for="doc-symptom-input" data-i18n="enter_symptoms">Describe Symptoms or Plant Parts:</label>
+          <input type="text" id="doc-symptom-input" placeholder="e.g. yellow curled leaves, brown spots, holes in leaves, whitefly...">
+        </div>
+        <button id="doc-search-btn" class="btn btn-primary" data-i18n="diagnose_btn">🔍 Diagnose</button>
+      </div>
+
+      <div class="cards-grid" id="diseases-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 3: INPUT COST CALCULATOR -->
+    <section id="tab-calculator" class="tab-pane">
+      <div class="section-intro">
+        <div>
+          <h2 data-i18n="calc_heading">Farm Input & Cost Optimizer</h2>
+          <p data-i18n="calc_sub">Smallholder farmers frequently overspend on seeds and synthetic fertilizers. Calculate precise quantities and see your savings.</p>
+        </div>
+      </div>
+
+      <div class="calc-layout">
+        <div class="calc-form-card">
+          <h3 data-i18n="enter_plot_details">Enter Plot Details</h3>
+          <form id="calc-form">
+            <div class="form-group">
+              <label for="calc-crop-select" data-i18n="select_crop">Select Crop</label>
+              <select id="calc-crop-select" required>
+                <option value="wheat">Wheat (गेहूं)</option>
+                <option value="rice">Rice / Paddy (धान)</option>
+                <option value="tomato">Tomato (टमाटर)</option>
+                <option value="potato">Potato (आलू)</option>
+                <option value="maize">Maize / Corn (मक्का)</option>
+                <option value="chili">Chili (मिर्च)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="calc-acres-input" data-i18n="land_size">Land Area (in Acres)</label>
+              <input type="number" id="calc-acres-input" min="0.1" max="100" step="0.1" value="1.0" required>
+              <span class="input-helper" data-i18n="acre_helper">1 Acre ≈ 0.4 Hectare ≈ 8 Kanals / 40 Guntas</span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" data-i18n="calc_action_btn">⚡ Optimize My Input Costs</button>
+          </form>
+        </div>
+
+        <div class="calc-result-card" id="calc-result-area">
+          <div class="calc-placeholder">
+            <span class="big-icon">📊</span>
+            <h4 data-i18n="ready_to_calculate">Ready to calculate!</h4>
+            <p data-i18n="calc_hint">Select your crop and land size above to see exact seed rates, chemical costs vs DIY organic alternatives, and net money saved.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: DIY ORGANIC RECIPES (Cut Input Costs) -->
+    <section id="tab-recipes" class="tab-pane">
+      <div class="section-intro">
+        <div>
+          <h2 data-i18n="recipes_heading">DIY Bio-Inputs: High Savings Recipes</h2>
+          <p data-i18n="recipes_sub">Replace costly chemical bags with farm-made organic inputs that cost up to 90% less and replenish soil ecology.</p>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="recipes-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 5: COMMUNITY EQUIPMENT SHARING -->
+    <section id="tab-equipment" class="tab-pane">
+      <div class="section-intro">
+        <div>
+          <h2 data-i18n="equipment_heading">Neighbor Tool & Machine Sharing</h2>
+          <p data-i18n="equipment_sub">Don't buy expensive tractors or power sprayers. Rent or borrow from fellow smallholder farmers at low hourly rates.</p>
+        </div>
+        <button id="open-tool-modal-btn" class="btn btn-secondary" data-i18n="list_tool_btn">➕ List My Equipment</button>
+      </div>
+
+      <div class="cards-grid" id="equipment-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 6: BULK BUYING POOLS -->
+    <section id="tab-bulk" class="tab-pane">
+      <div class="section-intro">
+        <div>
+          <h2 data-i18n="bulk_heading">Collective Group Purchasing Circles</h2>
+          <p data-i18n="bulk_sub">Single smallholders pay high retail markups. Pool your seed and fertilizer orders with nearby farmers for wholesale discounts (25-40%).</p>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="bulk-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal: List Equipment -->
+  <div class="modal" id="tool-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 data-i18n="list_tool_modal_title">List Machine or Tool for Rent</h3>
+        <button class="close-modal" id="close-tool-modal">&times;</button>
+      </div>
+      <form id="tool-form">
+        <div class="form-group">
+          <label for="tool-name-input">Tool / Machine Name *</label>
+          <input type="text" id="tool-name-input" placeholder="e.g. 5 HP Rotavator or Knapsack Sprayer" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tool-cat-select">Category</label>
+            <select id="tool-cat-select">
+              <option value="Tractor & Tillage">Tractor & Tillage</option>
+              <option value="Sprayers">Sprayers</option>
+              <option value="Seeders">Seeders</option>
+              <option value="Harvesting & Threshing">Harvesting</option>
+              <option value="Irrigation">Irrigation</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tool-price-input">Price / Hour ($ or ₹) *</label>
+            <input type="number" id="tool-price-input" min="0.5" step="0.5" value="3.0" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tool-owner-input">Owner Name *</label>
+            <input type="text" id="tool-owner-input" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <label for="tool-phone-input">Phone Number *</label>
+            <input type="text" id="tool-phone-input" placeholder="+91 98xxx xxxxx" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tool-loc-input">Village / Hamlet Location *</label>
+          <input type="text" id="tool-loc-input" placeholder="e.g. Village Sector 3" required>
+        </div>
+        <div class="form-group">
+          <label for="tool-desc-input">Description / Notes</label>
+          <textarea id="tool-desc-input" rows="2" placeholder="Mention attachments, condition, or delivery details"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="cancel-tool-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Publish Listing</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container footer-content">
+      <p><strong>AgriSmart Smallholder Ecosystem</strong> • Dedicated to first-time & low-acreage farmers.</p>
+      <p class="host-info">Host Endpoint: <code id="host-url-display">http://localhost:5000</code> • Backend API: <a href="/api/health" target="_blank">/api/health</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
